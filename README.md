@@ -6,6 +6,8 @@
 
 1. git init(.git 폴더가 없는 경우에만(ex: 첫 입력)
 
+---
+
 2. git pull
 
 3. git add .
