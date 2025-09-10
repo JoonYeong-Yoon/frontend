@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 
-const TapIcon = ({ content }) => {
-  console.log("content", content);
-  const { title, setTitle } = useState(content);
-  return (
-    <>
-      <p>{content}</p>
-    </>
-  );
+const TapIcon = ({ content, isItSelected }) => {
+  if (isItSelected) {
+    return <h1>{content}</h1>;
+  } else {
+    return <p>{content}</p>;
+  }
 };
 
 export default TapIcon;
