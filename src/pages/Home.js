@@ -11,6 +11,8 @@ import TapIcon from "../components/TapIcon";
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(4);
+  const [userUid, setUserUid] = useState("testing@daum.net");
+  const [password, setPassword] = useState("1234abAB");
 
   const tabClickHandler = (index) => {
     setActiveIndex(index);
@@ -39,7 +41,16 @@ const Home = () => {
     aTab("Introducd", <Introduce />, 1),
     aTab("News", <News />, 2),
     aTab("Q & A", <QnA />, 3),
-    aTab("Login", <Login />, 4),
+    aTab(
+      "Login",
+      <Login
+        userUid={userUid}
+        setUserUid={setUserUid}
+        password={password}
+        setPassword={setPassword}
+      />,
+      4
+    ),
   ];
 
   return (
@@ -49,6 +60,7 @@ const Home = () => {
           return section.tabTitle;
         })}
       </ul>
+      <p>{userUid}</p>
       <div>{tabContArr[activeIndex].tabCont}</div>
     </div>
   );
