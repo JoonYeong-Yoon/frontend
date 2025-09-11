@@ -2,15 +2,23 @@
 import axios from "axios";
 
 const Login = ({ userUid, setUserUid, password, setPassword }) => {
-  const onclickForLogin = () => {
+  const onclickForLogin = async () => {
     // loginApi(userUid, password);
     console.log("userUid", userUid);
     console.log("password", password);
     try {
-      const response = axios.post("http://localhost:5000/users/login/", {
-        userUid: { userUid },
-        password: { password },
-      });
+      // const response = axios.post(
+      //   "http://localhost:5000/users/login/",
+      //   JSON.stringify({
+      //     userUid: userUid,
+      //     password: password,
+      //   })
+      // );
+      const response = await axios.post(
+        "http://localhost:5000/users/login",
+        { userUid, password },
+        { withCredentials: true } // 세션 쿠키 브라우저에 저장
+      );
       console.log("response", response);
     } catch (error) {
       console.log("error", error);
