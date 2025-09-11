@@ -57,7 +57,6 @@ function DiseaseJudgement() {
       setLoading(false);
     }
   };
-
   return (
     <>
       {result === null ? (

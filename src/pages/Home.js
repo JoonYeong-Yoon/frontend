@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 // pages
 // import DiseaseJudgement from "./DiseaseJudgement.js";
+import DiseaseJudgementTwo from "./DiseaseJudgementTwo.js";
 import Introduce from "./Introduce";
 import News from "./News";
 import QnA from "./QnA";
@@ -13,9 +14,14 @@ const Home = () => {
   const [activeIndex, setActiveIndex] = useState(4);
   const [userUid, setUserUid] = useState("testing@daum.net");
   const [password, setPassword] = useState("1234abAB");
+  const [isItLogined, setBeingLogined] = useState(false);
 
   const tabClickHandler = (index) => {
-    setActiveIndex(index);
+    if (index !== 4 && index != 0 && isItLogined === false) {
+      setActiveIndex(4);
+    } else {
+      setActiveIndex(index);
+    }
   };
 
   function aTab(content, page, indexToSelected) {
@@ -37,11 +43,20 @@ const Home = () => {
   }
 
   const tabContArr = [
-    // aTab("Home", <DiseaseJudgement />, 0),
-    aTab("Home", <p>DiseaseJudgement</p>, 0),
-    aTab("Introducd", <Introduce />, 1),
-    aTab("News", <News />, 2),
-    aTab("Q & A", <QnA />, 3),
+    // aTab(
+    //   "Home",
+    //   <DiseaseJudgement userUid={userUid} isItLogined={isItLogined} />,
+    //   0
+    // ),
+    aTab("Home", <DiseaseJudgementTwo />, 0),
+    // aTab("Home", <p>DiseaseJudgement</p>, 0),
+    aTab(
+      "Introducd",
+      <Introduce userUid={userUid} isItLogined={isItLogined} />,
+      1
+    ),
+    aTab("News", <News userUid={userUid} isItLogined={isItLogined} />, 2),
+    aTab("Q & A", <QnA userUid={userUid} isItLogined={isItLogined} />, 3),
     aTab(
       "Login",
       <Login
@@ -49,6 +64,8 @@ const Home = () => {
         setUserUid={setUserUid}
         password={password}
         setPassword={setPassword}
+        isItLogined={isItLogined}
+        setBeingLogined={setBeingLogined}
       />,
       4
     ),
@@ -61,7 +78,6 @@ const Home = () => {
           return section.tabTitle;
         })}
       </ul>
-      <p>{userUid}</p>
       <div>{tabContArr[activeIndex].tabCont}</div>
     </div>
   );
