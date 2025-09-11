@@ -1,5 +1,21 @@
+// import loginApi from "../api/LoginRelatedApi.js";
+import axios from "axios";
+
 const Login = ({ userUid, setUserUid, password, setPassword }) => {
-  const onclickForLogin = () => {};
+  const onclickForLogin = () => {
+    // loginApi(userUid, password);
+    console.log("userUid", userUid);
+    console.log("password", password);
+    try {
+      const response = axios.post("http://localhost:5000/users/login/", {
+        userUid: { userUid },
+        password: { password },
+      });
+      console.log("response", response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   const onChangeForUserUid = (event) => {
     setUserUid(event.target.value);
   };

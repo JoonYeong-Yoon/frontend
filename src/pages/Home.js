@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // pages
-import DiseaseJudgement from "./DiseaseJudgment.js";
+// import DiseaseJudgement from "./DiseaseJudgement.js";
 import Introduce from "./Introduce";
 import News from "./News";
 import QnA from "./QnA";
@@ -37,7 +37,8 @@ const Home = () => {
   }
 
   const tabContArr = [
-    aTab("Home", <DiseaseJudgement />, 0),
+    // aTab("Home", <DiseaseJudgement />, 0),
+    aTab("Home", <p>DiseaseJudgement</p>, 0),
     aTab("Introducd", <Introduce />, 1),
     aTab("News", <News />, 2),
     aTab("Q & A", <QnA />, 3),
