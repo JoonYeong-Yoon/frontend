@@ -80,7 +80,7 @@ const Home = () => {
     aTab("Home", <DiseaseJudgementTwo />, 0),
     // aTab("Home", <p>DiseaseJudgement</p>, 0),
     aTab(
-      "Introducd",
+      "Introduce",
       <Introduce userUid={userUid} isItLogined={isItLogined} />,
       1
     ),
