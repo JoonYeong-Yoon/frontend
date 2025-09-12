@@ -17,6 +17,7 @@ const DiseaseJudgementTwo = ({}) => {
         { withCredentials: true }
       );
       console.log("response", response);
+      setResult(response.data.message);
     } catch (error) {
       console.log("error", error);
     }
@@ -50,7 +51,7 @@ const DiseaseJudgementTwo = ({}) => {
         </>
       ) : (
         <>
-          <p>결과</p>
+          <p>result</p>
         </>
       )}
     </>
