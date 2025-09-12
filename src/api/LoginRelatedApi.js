@@ -10,6 +10,9 @@ function loginApi(userUid, password) {
       password: { password },
     });
     console.log("response", response);
+    if (response.data.message === "로그인 상공") {
+    } else {
+    }
   } catch (error) {
     console.log("error", error);
   }

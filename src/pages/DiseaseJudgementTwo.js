@@ -17,12 +17,16 @@ const DiseaseJudgementTwo = ({}) => {
         { withCredentials: true }
       );
       console.log("response", response);
-      setResult(response.data.message);
+      setResult(response);
+      // setResult("개가 아프네요");
     } catch (error) {
       console.log("error", error);
     }
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const reloardDiseaseJudgementPage = () => {
+    setResult(null);
+  };
 
   return (
     <>
@@ -51,7 +55,8 @@ const DiseaseJudgementTwo = ({}) => {
         </>
       ) : (
         <>
-          <p>result</p>
+          <p>{result}</p>
+          <button onClick={reloardDiseaseJudgementPage}>다시</button>
         </>
       )}
     </>
