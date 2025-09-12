@@ -92,33 +92,54 @@ const QnA = () => {
             </div>
             <div>
               <button type="submit">SEND</button>
+              {/* ===== [ADDED FROM #2] 작성 취소 버튼 시작 ===== */}
+              <button type="button" onClick={() => setBeingEdited(false)}>
+                취소
+              </button>
+              {/* ===== [ADDED FROM #2] 작성 취소 버튼 끝 ===== */}
             </div>
           </form>
         </>
       ) : (
         <div>
-          <h1>QnA</h1>
-          <div>
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <div key={post.documentId}>
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
-                  <div>
-                    <span>{post.userUid}</span>
-                    <span>
+          {/* ===== [ADDED FROM #2] 헤더 텍스트 교체 시작 ===== */}
+          <h1>QnA 게시판</h1>
+          {/* ===== [ADDED FROM #2] 헤더 텍스트 교체 끝 ===== */}
+
+          <button onClick={() => setBeingEdited(true)}>게시물 작성</button>
+
+          {/* ===== [ADDED FROM #2] 게시판 프레임(테이블) 시작 ===== */}
+          {posts.length > 0 ? (
+            <table border="1" cellPadding="5" style={{ marginTop: "10px" }}>
+              <thead>
+                <tr>
+                  <th>순서</th>
+                  <th>제목</th>
+                  <th>게시자</th>
+                  <th>게시일자</th>
+                </tr>
+              </thead>
+              <tbody>
+                {posts.map((post, index) => (
+                  <tr key={post.documentId}>
+                    <td>{index + 1}</td>
+                    <td>{post.title}</td>
+                    <td>{post.username || post.userUid}</td>
+                    <td>
                       {post.date
                         ? new Date(post.date).toLocaleDateString()
                         : ""}
-                    </span>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>아직 게시물이 없습니다.</p>
-            )}
-          </div>
-          <button onClick={() => setBeingEdited(true)}>게시물 작성</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>아직 게시물이 없습니다.</p>
+          )}
+          {/* ===== [ADDED FROM #2] 게시판 프레임(테이블) 끝 ===== */}
+
+          {/* (참고) 기존 1번 코드의 카드형 목록은 테이블로 대체됨 */}
         </div>
       )}
     </div>
