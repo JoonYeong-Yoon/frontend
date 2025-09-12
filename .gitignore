@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /src/pages/Qna copy.js
+/src/pages/Login copy.js
 
 # testing
 /coverage

@@ -17,7 +17,7 @@ const DiseaseJudgementTwo = ({}) => {
         { withCredentials: true }
       );
       console.log("response", response);
-      setResult(response);
+      setResult(response.data.message);
       // setResult("개가 아프네요");
     } catch (error) {
       console.log("error", error);
