@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useState, useRef } from "react";
+import onDropZoneImage from "../img/onDropZoneOnDiseaseJudgementPage.jpg";
 
 const DiseaseJudgementTwo = ({}) => {
   const [result, setResult] = useState(null);
@@ -26,27 +27,24 @@ const DiseaseJudgementTwo = ({}) => {
     <>
       {result === null ? (
         <>
-          <p>사진 줘요!</p>
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             {isDragActive ? (
               <div
                 style={{
-                  width: "100px", // 너비
-                  height: "100px", // 높이
-                  backgroundColor: "red", // 전달받은 색상
-                  margin: "10px",
-                }}
-              ></div>
-            ) : (
-              <div
-                style={{
-                  width: "100px", // 너비
-                  height: "100px", // 높이
+                  width: "600px", // 너비
+                  height: "380px", // 높이
                   backgroundColor: "blue", // 전달받은 색상
                   margin: "10px",
                 }}
               ></div>
+            ) : (
+              <div>
+                <div>
+                  <img src={onDropZoneImage} alt="사진 주세요" />
+                  <h2>이미지를 주세요</h2>
+                </div>
+              </div>
             )}
           </div>
         </>
