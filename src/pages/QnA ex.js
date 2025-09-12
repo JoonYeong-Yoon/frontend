@@ -1,135 +1,3 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const QnA = () => {
-  const [posts, setPosts] = useState([]);
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const [newPostContent, setNewPostContent] = useState("");
-  const [isItEdited, setBeingEdited] = useState(false);
-
-  const BACKEND_URL = "http://localhost:5000";
-
-  // ----------------- 게시물 불러오기 -----------------
-  const fetchPosts = async () => {
-    try {
-      const res = await axios.get(`${BACKEND_URL}/api/posts`, {
-        withCredentials: true,
-      });
-      setPosts(res.data);
-    } catch (err) {
-      console.error("게시물 불러오기 실패:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  // ----------------- 게시물 작성 -----------------
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const newPost = {
-      title: newPostTitle,
-      content: newPostContent,
-    };
-
-    try {
-      const res = await axios.post(`${BACKEND_URL}/api/posts`, newPost, {
-        withCredentials: true,
-      });
-
-      // 새로운 게시물 화면에 바로 추가
-      setPosts([res.data, ...posts]); // 최신 게시물이 위로 오도록
-
-      setNewPostTitle("");
-      setNewPostContent("");
-      setBeingEdited(false);
-    } catch (err) {
-      console.error("게시물 작성 실패:", err);
-    }
-  };
-
-  return (
-    <div>
-      {isItEdited ? (
-        <>
-          <h2>게시물 작성</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="title">제목</label>
-              <input
-                type="text"
-                id="title"
-                value={newPostTitle}
-                onChange={(e) => setNewPostTitle(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="content">내용</label>
-              <textarea
-                id="content"
-                value={newPostContent}
-                onChange={(e) => setNewPostContent(e.target.value)}
-                required
-              ></textarea>
-            </div>
-            <div>
-              <button type="submit">등록</button>
-              <button type="button" onClick={() => setBeingEdited(false)}>
-                취소
-              </button>
-            </div>
-          </form>
-        </>
-      ) : (
-        <div>
-          <h1>QnA 게시판</h1>
-          <button onClick={() => setBeingEdited(true)}>게시물 작성</button>
-
-          {posts.length > 0 ? (
-            <table border="1" cellPadding="5" style={{ marginTop: "10px" }}>
-              <thead>
-                <tr>
-                  <th>순서</th>
-                  <th>제목</th>
-                  <th>내용</th>
-                  <th>게시자</th>
-                  <th>게시일자</th>
-                </tr>
-              </thead>
-              <tbody>
-                {posts.map((post, index) => (
-                  <tr key={post.documentId}>
-                    <td>{index + 1}</td>
-                    <td>{post.title}</td>
-                    <td>{post.content}</td>
-                    <td>{post.username || post.userUid}</td>
-                    <td>
-                      {post.date
-                        ? new Date(post.date).toLocaleDateString()
-                        : ""}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>아직 게시물이 없습니다.</p>
-          )}
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default QnA;
-
-
-
-
-////이하 금일 원본
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -144,6 +12,9 @@ const QnA = () => {
   const [isItEdited, setBeingEdited] = useState(false);
 
   const BACKEND_URL = "http://localhost:5000"; // 백엔드 주소
+
+  // 9.12 수정. ===== [ADDED] 제출 상태 =====
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ----------------- 게시물 불러오기 -----------------
   const fetchPosts = async () => {
@@ -171,13 +42,16 @@ const QnA = () => {
       isPublic, // 프론트 변수 유지, 백엔드에선 현재 미사용
     };
 
+    // 9.12. 수정 ===== [ADDED] 전송 시작 플래그 =====
+    setIsSubmitting(true);
+
     try {
       const res = await axios.post(`${BACKEND_URL}/api/posts`, newPost, {
         withCredentials: true, // 세션 쿠키 포함
       });
 
       // 백엔드 응답에서 documentId, userUid, date 받음
-      setPosts([...posts, res.data]);
+      setPosts((prev) => [res.data, ...prev]); // 9.12 수정. 작성한 글을 목록 "최상단"에 즉시 반영 (prepend)
 
       setNewPostTitle("");
       setNewPostContent("");
@@ -185,6 +59,12 @@ const QnA = () => {
       setBeingEdited(false);
     } catch (err) {
       console.error("게시물 작성 실패:", err);
+      // 9.12. 수정= ==== [ADDED] 실패 알림(선택) =====
+      alert("작성에 실패했습니다. 콘솔을 확인하세요.");
+    } finally {
+      // 9.12. 수정===== [FIXED] 성공/실패와 무관하게 목록 화면으로 전환 보장 =====
+      setBeingEdited(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -202,6 +82,8 @@ const QnA = () => {
                 value={newPostTitle}
                 onChange={(e) => setNewPostTitle(e.target.value)}
                 required
+                // 9.12. 수정===== [ADDED] 전송 중 비활성화 =====
+                disabled={isSubmitting}
               />
             </div>
             <div>
@@ -211,6 +93,8 @@ const QnA = () => {
                 value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
                 required
+                // 9.12. 수정===== [ADDED] 전송 중 비활성화 =====
+                disabled={isSubmitting}
               ></textarea>
             </div>
             <div>
@@ -219,11 +103,21 @@ const QnA = () => {
                 id="isPublic"
                 checked={isPublic}
                 onChange={(e) => setIsPublic(e.target.checked)}
+                // 9.12. 수정===== [ADDED] 전송 중 비활성화 =====
+                disabled={isSubmitting}
               />
               <label htmlFor="isPublic">공개 게시물</label>
             </div>
             <div>
               <button type="submit">SEND</button>
+              {/* 9.12. 수정===== [ADDED] 취소 버튼 ===== */}
+              <button
+                type="button"
+                onClick={() => setBeingEdited(false)}
+                disabled={isSubmitting}
+              >
+                취소
+              </button>
             </div>
           </form>
         </>
@@ -258,3 +152,4 @@ const QnA = () => {
 };
 
 export default QnA;
+
