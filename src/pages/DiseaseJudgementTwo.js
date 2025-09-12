@@ -6,12 +6,12 @@ import onDropZoneImage from "../img/onDropZoneOnDiseaseJudgementPage.jpg";
 
 const DiseaseJudgementTwo = ({}) => {
   const [result, setResult] = useState(null);
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback(async (acceptedFiles) => {
     try {
       console.log(acceptedFiles);
       const formData = new FormData();
       formData.append("image", acceptedFiles[0], acceptedFiles[0].name);
-      const response = axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api/predict/",
         formData,
         { withCredentials: true }
