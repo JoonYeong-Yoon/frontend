@@ -20,7 +20,11 @@ const QnA = () => {
       const res = await axios.get(`${BACKEND_URL}/api/posts`, {
         withCredentials: true, // 세션 쿠키 포함
       });
-      setPosts(res.data);
+      // ★ 수정: 날짜 기준 내림차순(최신글 먼저)
+      const sorted = [...res.data].sort(
+        (a, b) => new Date(b?.date || 0) - new Date(a?.date || 0)
+      );
+      setPosts(sorted); // ★ 수정
     } catch (err) {
       console.error("게시물 불러오기 실패:", err);
     }
@@ -46,7 +50,8 @@ const QnA = () => {
       });
 
       // 백엔드 응답에서 documentId, userUid, date 받음
-      setPosts([...posts, res.data]);
+      // ★ 수정: 새 글을 맨 위에 추가(기존 [...posts, res.data] → 앞에 넣기)
+      setPosts((prev) => [res.data, ...prev]); // ★ 수정
 
       setNewPostTitle("");
       setNewPostContent("");
