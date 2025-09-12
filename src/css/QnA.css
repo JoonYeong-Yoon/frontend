@@ -1,0 +1,193 @@
+/* Q&A 게시판 제목  */
+.qna-title {
+  background-color: white;
+  padding: 12px 16px;
+  color: black;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin: 16px 0; /* 위아래 간격 */
+}
+
+/* Q&A 게시판 테이블 영역 */
+.qna-table-wrapper {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+/* Q&A 게시판 테이블   */
+.qna-table {
+  width: 100%;
+  border-collapse: collapse; /* 겹치는 테두리 제거 */
+  background: white; /* 하얀 바탕 */
+  border: 1px solid #e1e3e8; /* 테이블 라인 */
+  table-layout: fixed; /* 긴 제목 말줄임 처리에 유리 */
+  font-size: 15px;
+}
+
+/* 본문 셀 공통 */
+.qna-table tbody td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f1f5f9; /* 행 구분선 */
+  color: #111827; /* 검정에 가까운 글자색 */
+  background: #ffffff; /* 하얀 배경 */
+}
+
+.qna-table thead th {
+  background: #f8fafc; /* 옅은 헤더 배경 */
+  color: #111827;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e1e3e8;
+  white-space: nowrap;
+}
+
+/* 줄무늬 효과 (가독성 향상) */
+.qna-table tbody tr:nth-child(odd) td {
+  background: #fcfcfd;
+}
+
+/* 행 hover 효과 */
+.qna-table tbody tr:hover td {
+  background: #f5f7fb;
+}
+
+/* 열별 정렬 & 너비 */
+.qna-table .col-index,
+.qna-table .col-date,
+.qna-table .col-author {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.qna-table .col-index {
+  width: 80px;
+}
+
+.qna-table .col-title {
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.qna-table .col-author {
+  width: 160px;
+}
+
+.qna-table .col-date {
+  width: 140px;
+}
+
+/* /////////////// Q&A 게시판 등록 페이지 */
+
+.qna-form {
+  max-width: 720px;
+  margin: 20px auto;
+  background: #ffffff; /* 하얀 바탕 */
+  color: #111827; /* 검정에 가까운 글자색 */
+  border: 1px solid #e5e7eb; /* 옅은 테두리 */
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.qna-form__title {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.qna-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.qna-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qna-form__label {
+  font-weight: 600;
+}
+
+.qna-form__input,
+.qna-form__textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 1rem;
+}
+
+.qna-form__textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.qna-form__input:focus,
+.qna-form__textarea:focus,
+.qna-form__checkbox input:focus {
+  outline: 2px solid #111827; /* 진한 포커스 링 */
+  outline-offset: 2px;
+  border-color: #111827;
+}
+
+.qna-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.qna-form__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* 버튼 공통 */
+.btn {
+  appearance: none;
+  border: 1px solid #111827;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.02s ease;
+}
+
+/* 기본: 검정 배경, 흰 글씨 */
+.btn--primary {
+  background: #111827;
+  color: #ffffff;
+}
+.btn--primary:hover {
+  background: #0b1220;
+}
+
+/* 고스트: 흰 배경, 검정 글씨 */
+.btn--ghost {
+  background: #ffffff;
+  color: #111827;
+}
+.btn--ghost:hover {
+  background: #f3f4f6;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

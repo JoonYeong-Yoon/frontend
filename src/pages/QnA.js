@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import "../css/QnA.css"; //9.12. css 추가
 
 const QnA = () => {
   // 기존 게시물 데이터
@@ -60,85 +61,108 @@ const QnA = () => {
     <div>
       {isItEdited ? (
         <>
-          <h2>게시물 작성</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="title">제목</label>
-              <input
-                type="text"
-                id="title"
-                value={newPostTitle}
-                onChange={(e) => setNewPostTitle(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="content">내용</label>
-              <textarea
-                id="content"
-                value={newPostContent}
-                onChange={(e) => setNewPostContent(e.target.value)}
-                required
-              ></textarea>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                id="isPublic"
-                checked={isPublic}
-                onChange={(e) => setIsPublic(e.target.checked)}
-              />
-              <label htmlFor="isPublic">공개 게시물</label>
-            </div>
-            <div>
-              <button type="submit">SEND</button>
-              {/* ===== [ADDED FROM #2] 작성 취소 버튼 시작 ===== */}
-              <button type="button" onClick={() => setBeingEdited(false)}>
-                취소
-              </button>
-              {/* ===== [ADDED FROM #2] 작성 취소 버튼 끝 ===== */}
-            </div>
-          </form>
+          <div className="qna-form">
+            <h2 className="qna-form__title">게시물 작성</h2>
+
+            <form onSubmit={handleSubmit} className="qna-form__body">
+              {/* 제목 */}
+              <div className="qna-form__group">
+                <label htmlFor="title" className="qna-form__label">
+                  제목
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  value={newPostTitle}
+                  onChange={(e) => setNewPostTitle(e.target.value)}
+                  required
+                  className="qna-form__input"
+                  placeholder="제목을 입력하세요"
+                />
+              </div>
+
+              {/* 내용 */}
+              <div className="qna-form__group">
+                <label htmlFor="content" className="qna-form__label">
+                  내용
+                </label>
+                <textarea
+                  id="content"
+                  value={newPostContent}
+                  onChange={(e) => setNewPostContent(e.target.value)}
+                  required
+                  className="qna-form__textarea"
+                  placeholder="내용을 입력하세요"
+                ></textarea>
+              </div>
+
+              {/* 공개 여부 */}
+              <div className="qna-form__checkbox">
+                <input
+                  type="checkbox"
+                  id="isPublic"
+                  checked={isPublic}
+                  onChange={(e) => setIsPublic(e.target.checked)}
+                />
+                <label htmlFor="isPublic">공개 게시물</label>
+              </div>
+
+              {/* 버튼 영역 */}
+              <div className="qna-form__actions">
+                <button
+                  type="button"
+                  className="btn btn--ghost"
+                  onClick={() => setBeingEdited(false)}
+                >
+                  취소
+                </button>
+                <button type="submit" className="btn btn--primary">
+                  SEND
+                </button>
+              </div>
+            </form>
+          </div>
         </>
       ) : (
         <div>
           {/* ===== [ADDED FROM #2] 헤더 텍스트 교체 시작 ===== */}
-          <h1>QnA 게시판</h1>
+          <h1 className="qna-title">Q&A</h1> {/* 9.12. css수정  */}
           {/* ===== [ADDED FROM #2] 헤더 텍스트 교체 끝 ===== */}
-
           <button onClick={() => setBeingEdited(true)}>게시물 작성</button>
-
           {/* ===== [ADDED FROM #2] 게시판 프레임(테이블) 시작 ===== */}
           {posts.length > 0 ? (
-            <table border="1" cellPadding="5" style={{ marginTop: "10px" }}>
-              <thead>
-                <tr>
-                  <th>순서</th>
-                  <th>제목</th>
-                  <th>게시자</th>
-                  <th>게시일자</th>
-                </tr>
-              </thead>
-              <tbody>
-                {posts.map((post, index) => (
-                  <tr key={post.documentId}>
-                    <td>{index + 1}</td>
-                    <td>{post.title}</td>
-                    <td>{post.username || post.userUid}</td>
-                    <td>
-                      {post.date
-                        ? new Date(post.date).toLocaleDateString()
-                        : ""}
-                    </td>
+            <div className="qna-table-wrapper">
+              <table className="qna-table">
+                <thead>
+                  <tr>
+                    <th className="col-index">순서</th>
+                    <th className="col-title">제목</th>
+                    <th className="col-author">게시자</th>
+                    <th className="col-date">게시일자</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {posts.map((post, index) => (
+                    <tr key={post.documentId}>
+                      <td className="col-index">{index + 1}</td>
+                      <td className="col-title">{post.title}</td>
+                      <td className="col-author">
+                        {post.username || post.userUid}
+                      </td>
+                      <td className="col-date">
+                        {post.date
+                          ? new Date(post.date).toLocaleDateString()
+                          : ""}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <p>아직 게시물이 없습니다.</p>
           )}
           {/* ===== [ADDED FROM #2] 게시판 프레임(테이블) 끝 ===== */}
-
           {/* (참고) 기존 1번 코드의 카드형 목록은 테이블로 대체됨 */}
         </div>
       )}
