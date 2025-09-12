@@ -14,10 +14,10 @@ const Home = () => {
   const [activeIndex, setActiveIndex] = useState(4);
   const [userUid, setUserUid] = useState("testing@daum.net");
   const [password, setPassword] = useState("1234abAB");
-  const [isItLogined, setBeingLogined] = useState(false);
+  const [isItLogined, setBeingLogined] = useState(true);
 
   const tabClickHandler = (index) => {
-    if (index !== 4 && index != 0 && isItLogined === false) {
+    if (index !== 4 && index !== 0 && isItLogined === false) {
       setActiveIndex(4);
     } else {
       setActiveIndex(index);

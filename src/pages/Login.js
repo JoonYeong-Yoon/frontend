@@ -61,7 +61,6 @@ const Login = ({
           onChange={onChangeForPassword}
           placeholder="비밀번호"
         />
-        <p>{userUid}</p>
         <button onClick={onclickForLogin}>로그인</button>
       </>
     );
