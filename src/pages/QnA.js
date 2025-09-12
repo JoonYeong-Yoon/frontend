@@ -22,7 +22,8 @@ const QnA = () => {
       });
       // ★ 수정: 날짜 기준 내림차순(최신글 먼저)
       const sorted = [...res.data].sort(
-        (a, b) => new Date(b?.date || 0) - new Date(a?.date || 0)
+        (a, b) =>
+          new Date(b?.queCreatedAt || 0) - new Date(a?.queCreatedAt || 0)
       );
       setPosts(sorted); // ★ 수정
     } catch (err) {
@@ -155,8 +156,8 @@ const QnA = () => {
                         {post.username || post.userUid}
                       </td>
                       <td className="col-date">
-                        {post.date
-                          ? new Date(post.date).toLocaleDateString()
+                        {post.queCreatedAt
+                          ? new Date(post.queCreatedAt).toLocaleDateString()
                           : ""}
                       </td>
                     </tr>
