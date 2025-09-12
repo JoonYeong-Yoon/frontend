@@ -8,29 +8,33 @@ const Login = ({
   setPassword,
   isItLogined,
   setBeingLogined,
+  setModalTitle,
+  setModalContent,
+  openModal,
 }) => {
   const onclickForLogin = async () => {
     // loginApi(userUid, password);
     console.log("userUid", userUid);
     console.log("password", password);
     try {
-      // const response = axios.post(
-      //   "http://localhost:5000/users/login/",
-      //   JSON.stringify({
-      //     userUid: userUid,
-      //     password: password,
-      //   })
-      // );
       const response = await axios.post(
         "http://localhost:5000/users/login",
         { userUid, password },
         { withCredentials: true } // 세션 쿠키 브라우저에 저장
       );
-      if (response.statusText === "OK") {
+      if (
+        response.statusText === "OK" &&
+        response.data.message === "로그인 성공"
+      ) {
         setBeingLogined(true);
         setPassword("");
+        setModalTitle("로그인 성공");
+        openModal();
+        console.log("response", response);
       } else {
         setBeingLogined(false);
+        setModalTitle("로그인 실패");
+        openModal();
       }
     } catch (error) {
       console.log("error", error);
