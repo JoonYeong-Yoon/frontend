@@ -17,3 +17,8 @@
 4. git commit -m "~~~"(간단하게 설명)
 
 5. git push
+
+```bash
+conda create -n py_310 python==3.10
+pip install opencv-python numpy==1.23 tensorflow==2.8 Pillow protobuf==3.20
+```

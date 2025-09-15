@@ -10,6 +10,31 @@
   margin: 16px 0; /* 위아래 간격 */
 }
 
+/* 검색 영역 컨테이너 중앙 정렬 */
+.qna-search {
+  display: flex;
+  justify-content: center; /* 가로 가운데 */
+  align-items: center;     /* 세로 가운데 */
+  gap: 8px;                /* 요소 간격 */
+  margin: 20px 0;          /* 위아래 여백 */
+}
+
+/* 검색 입력창 스타일 */
+.qna-search__input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 250px;            /* 입력창 길이 (원하면 조절 가능) */
+}
+
+/* 버튼 스타일 공통 */
+.qna-search__button,
+.qna-search__clear {
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 /* Q&A 게시판 테이블 영역 */
 .qna-table-wrapper {
   margin-top: 12px;
