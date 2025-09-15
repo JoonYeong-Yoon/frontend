@@ -1,5 +1,7 @@
 // import loginApi from "../api/LoginRelatedApi.js";
 import axios from "axios";
+import { useState } from "react";
+import Signup from "./Signup";
 
 const Login = ({
   userUid,
@@ -12,6 +14,7 @@ const Login = ({
   setModalContent,
   openModal,
 }) => {
+  const [showSignup, setShowSignup] = useState(false);
   const onclickForLogin = async () => {
     // loginApi(userUid, password);
     console.log("userUid", userUid);
@@ -55,23 +58,39 @@ const Login = ({
   if (isItLogined === false) {
     return (
       <>
-        <p>로그인</p>
-        <p>로그인이 필요합니다</p>
-        <p>이메일 형식 아이디</p>
-        <input
-          type="text"
-          value={userUid}
-          onChange={onChangeForUserUid}
-          placeholder="이메일 형식 아이디"
-        />
-        <p>비밀번호</p>
-        <input
-          type="text"
-          value={password}
-          onChange={onChangeForPassword}
-          placeholder="비밀번호"
-        />
-        <button onClick={onclickForLogin}>로그인</button>
+        {!showSignup ? (
+          <>
+            <p>로그인</p>
+            <p>로그인이 필요합니다</p>
+            <p>이메일 형식 아이디</p>
+            <input
+              type="text"
+              value={userUid}
+              onChange={onChangeForUserUid}
+              placeholder="이메일 형식 아이디"
+            />
+            <p>비밀번호</p>
+            <input
+              type="text"
+              value={password}
+              onChange={onChangeForPassword}
+              placeholder="비밀번호"
+            />
+            <button onClick={onclickForLogin}>로그인</button>
+            <button onClick={() => setShowSignup(true)}>회원가입</button>
+          </>
+        ) : (
+          <>
+            <Signup
+              setModalTitle={setModalTitle}
+              setModalContent={setModalContent}
+              openModal={openModal}
+              onSignupSuccess={() => setShowSignup(false)} // 회원가입 성공 시 로그인 화면으로 복귀
+            />
+            {/* 회원가입 폼일 때만 취소 버튼 보이기 */}
+            <button onClick={() => setShowSignup(false)}>취소</button>
+          </>
+        )}
       </>
     );
   } else {
