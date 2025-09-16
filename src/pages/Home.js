@@ -19,7 +19,7 @@ Modal.setAppElement(document.getElementById("root"));
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(2);
-  const [userUid, setUserUid] = useState("testing@daum.net");
+  const [userUid, setUserUid] = useState("testing@1234.com");
   const [password, setPassword] = useState("1234abAB");
   const [isItLogined, setBeingLogined] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -112,7 +112,7 @@ const Home = () => {
           <ModalOnHome onClose={closeModal}>
             <h2>{modalTitle}</h2>
             <p>{modalContent}</p>
-            <button style="float: right;" onClick={closeModal}>
+            <button style={{ float: "right" }} onClick={closeModal}>
               닫기
             </button>
           </ModalOnHome>
