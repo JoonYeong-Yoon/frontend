@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
-import "../css/QnA.css";
+import React, { useEffect, useState } from "react";
+import "../css/QnA.css"; //9.12. css 추가
 
 const QnA = () => {
   // 기존 게시물 데이터
@@ -13,7 +13,6 @@ const QnA = () => {
   const [isItEdited, setBeingEdited] = useState(false);
 
   const BACKEND_URL = "http://localhost:5000"; // 백엔드 주소
-  const [searchQuery, setSearchQuery] = useState(""); // 25.09.15. 추가. 검색어 상태
 
   // ----------------- 게시물 불러오기 -----------------
   const fetchPosts = async () => {
@@ -21,13 +20,12 @@ const QnA = () => {
       const res = await axios.get(`${BACKEND_URL}/api/posts`, {
         withCredentials: true, // 세션 쿠키 포함
       });
-      // 날짜 기준 내림차순(최신글 먼저). 25.9.15 추가
-      const list = Array.isArray(res.data) ? res.data : []; // [SAFE] 비배열 방어
-      const sorted = [...list].sort(
+      // ★ 수정: 날짜 기준 내림차순(최신글 먼저)
+      const sorted = [...res.data].sort(
         (a, b) =>
           new Date(b?.queCreatedAt || 0) - new Date(a?.queCreatedAt || 0)
       );
-      setPosts(sorted);
+      setPosts(sorted); // ★ 수정
     } catch (err) {
       console.error("게시물 불러오기 실패:", err);
     }
@@ -62,24 +60,6 @@ const QnA = () => {
       setBeingEdited(false);
     } catch (err) {
       console.error("게시물 작성 실패:", err);
-    }
-  };
-
-  // ----------------- [ADD] 검색 로직 (클라이언트 필터) -----------
-  const filteredPosts = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return posts;
-    return posts.filter((post) => {
-      const title = (post.title || "").toLowerCase();
-      const content = (post.content || "").toLowerCase();
-      const author = (post.username || post.userUid || "").toLowerCase();
-      return title.includes(q) || content.includes(q) || author.includes(q);
-    });
-  }, [posts, searchQuery]);
-  // ---------------- [ADD] Enter로 검색, ESC로 초기화 (선택적 UX 향상) ----
-  const handleSearchKeyDown = (e) => {
-    if (e.key === "Escape") {
-      setSearchQuery("");
     }
   };
 
@@ -151,28 +131,14 @@ const QnA = () => {
         </>
       ) : (
         <div>
-          <h1 className="qna-title">Q&A</h1>
-          {/* ----------------- [ADD] 검색 바 UI. 25.9.15. 추가 ----------------- */}
-          <div className="qna-search">
-            <input
-              type="text"
-              className="qna-search__input"
-              placeholder="제목 / 내용 / 게시자 검색"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-            />
-            <button
-              className="btn btn--primary qna-search__button"
-              onClick={() => setSearchQuery((v) => v.trim())}
-              aria-label="검색"
-            >
-              검색
-            </button>
+          {/* ===== [ADDED FROM #2] 헤더 텍스트 교체 시작 ===== */}
+          <h1 className="qna-title">Q&A</h1> {/* 9.12. css수정  */}
+          {/* ===== [ADDED FROM #2] 헤더 텍스트 교체 끝 ===== */}
+          <div className="empty">
+            <button onClick={() => setBeingEdited(true)}>게시물 작성</button>
           </div>
-
-          <button onClick={() => setBeingEdited(true)}>게시물 작성</button>
-          {filteredPosts.length > 0 ? ( // 25.9.15. 추가 [FIX] 조건 대상 교체
+          {/* ===== [ADDED FROM #2] 게시판 프레임(테이블) 시작 ===== */}
+          {posts.length > 0 ? (
             <div className="qna-table-wrapper">
               <table className="qna-table">
                 <thead>
@@ -184,16 +150,8 @@ const QnA = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredPosts.map((post, index) => (
-                    // [FIX] 불필요한 단항 + 연산자 제거(이전 NaN 원인)
-                    <tr
-                      key={
-                        post.documentId ||
-                        `${post.userUid || "anon"}-${
-                          post.queCreatedAt || index
-                        }-${index}`
-                      }
-                    >
+                  {posts.map((post, index) => (
+                    <tr key={post.documentId}>
                       <td className="col-index">{index + 1}</td>
                       <td className="col-title">{post.title}</td>
                       <td className="col-author">
@@ -210,12 +168,7 @@ const QnA = () => {
               </table>
             </div>
           ) : (
-            // [MOD] 검색 결과 없는 경우 문구 개선
-            <p>
-              {searchQuery
-                ? "검색 결과가 없습니다."
-                : "아직 게시물이 없습니다."}
-            </p>
+            <p className="empty">아직 게시물이 없습니다.</p>
           )}
           {/* ===== [ADDED FROM #2] 게시판 프레임(테이블) 끝 ===== */}
           {/* (참고) 기존 1번 코드의 카드형 목록은 테이블로 대체됨 */}

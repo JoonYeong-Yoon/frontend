@@ -1,0 +1,51 @@
+.disease-judgement {
+  text-align: center;
+  justify-content: center;
+}
+/* 이미지 영역 */
+.image-container {
+  /* position: relative; */
+  /* display: block; */
+  justify-content: center;
+  margin-top: 50px;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  width: 50%;
+}
+
+.dog-img {
+  border-radius: 8px;
+}
+
+.dog-img-on-drop {
+  border-radius: 8px;
+  opacity: 0.4;
+}
+
+/* 이미지 위 텍스트 버튼 */
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  color: white;
+  font-family: "맑은 고딕", sans-serif;
+  font-size: calc(18px + 2vmin);
+  font-weight: bold;
+  cursor: pointer;
+}
+.DJResult_textbox {
+  background-color: rgb(71, 191, 231);
+  border: none;
+  color: rgb(228, 117, 14);
+  font-family: "맑은 고딕", Arial, sans-serif;
+  font-size: calc(23px + 2vmin);
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  width: fit-content;
+  margin: 20px auto;
+}

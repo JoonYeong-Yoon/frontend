@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useState, useRef } from "react";
 import onDropZoneImage from "../img/onDropZoneOnDiseaseJudgementPage.jpg";
+import "../css/DiseaseJudgement.css";
 
 const DiseaseJudgementTwo = ({}) => {
   const [result, setResult] = useState(null);
@@ -30,35 +31,42 @@ const DiseaseJudgementTwo = ({}) => {
 
   return (
     <>
-      {result === null ? (
-        <>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <div
-                style={{
-                  width: "600px", // 너비
-                  height: "380px", // 높이
-                  backgroundColor: "blue", // 전달받은 색상
-                  margin: "10px",
-                }}
-              ></div>
-            ) : (
-              <div>
+      <div className="disease-judgement">
+        {result === null ? (
+          <>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              {isDragActive ? (
                 <div>
-                  <img src={onDropZoneImage} alt="사진 주세요" />
-                  <h2>이미지를 주세요</h2>
+                  <div className="disease-judgement">
+                    <img
+                      className="dog-img-on-drop"
+                      src={onDropZoneImage}
+                      alt="사진 주세요"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <p>{result}</p>
-          <button onClick={reloardDiseaseJudgementPage}>다시</button>
-        </>
-      )}
+              ) : (
+                <div>
+                  <div className="disease-judgement">
+                    <img
+                      className="dog-img"
+                      src={onDropZoneImage}
+                      alt="사진 주세요"
+                    />
+                    <h2>이미지를 주세요</h2>
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <p>{result}</p>
+            <button onClick={reloardDiseaseJudgementPage}>다시</button>
+          </>
+        )}
+      </div>
     </>
   );
 };
