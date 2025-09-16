@@ -145,6 +145,7 @@ const QnA = () => {
                   <tr>
                     <th className="col-index">순서</th>
                     <th className="col-title">제목</th>
+                    <th className="col-content">내용</th>
                     <th className="col-author">게시자</th>
                     <th className="col-date">게시일자</th>
                   </tr>
@@ -154,6 +155,7 @@ const QnA = () => {
                     <tr key={post.documentId}>
                       <td className="col-index">{index + 1}</td>
                       <td className="col-title">{post.title}</td>
+                      <td className="col-content">{post.content}</td>
                       <td className="col-author">
                         {post.username || post.userUid}
                       </td>

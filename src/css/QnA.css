@@ -67,6 +67,14 @@
 }
 
 .qna-table .col-title {
+  text-align: left; /* 왼쪽 정렬 */
+  width: 100px; /* 적절한 폭 설정 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* 길면 ... 처리 */
+  white-space: nowrap;
+}
+
+.qna-table .col-content {
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
